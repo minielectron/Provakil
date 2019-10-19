@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">Provakil</string>
+    <string name="provakil_client_form">Provakil Client Form</string>
+    <string name="client_personal_details">Client Personal Details</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="client_code">Client Code</string>
+    <string name="address_line_1">Address Line 1</string>
+    <string name="address_line_2">Address Line 2</string>
+    <string name="city">City</string>
+    <string name="pin">PIN</string>
+    <string name="address_type">Address Type</string>
+    <string name="home">Home</string>
+    <string name="office">Office</string>
+    <string name="contact_info">Contact Info.</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="advance_details">Advance Details</string>
+    <string name="extra_details">Extra Details</string>
+    <string name="submit">Submit</string>
+    <string-array name="city_list">
+        <item>Type</item>
+        <item>Home</item>
+        <item>Work</item>
+        <item>Mobile</item>
+        <item>Fax</item>
+        <item>Other</item>
+        <item>Mediation Failed</item>
+    </string-array>
 </resources>

@@ -1,4 +1,4 @@
-package com.androidcodeshop.provakil;
+package com.androidcodeshop.provakil.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.androidcodeshop.provakil.R;
+import com.androidcodeshop.provakil.adapters.ClientListAdapter;
+import com.androidcodeshop.provakil.data.ClientDataList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.androidcodeshop.provakil.activities.ClientFormActivity.IS_REFRESH;
 
 public class ClientListActivity extends AppCompatActivity {
 
@@ -20,6 +25,7 @@ public class ClientListActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.client_list_recycler_view)
     RecyclerView clientListRecyclerView;
+    private ClientListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +48,19 @@ public class ClientListActivity extends AppCompatActivity {
     }
 
     private void setRecyclerView() {
-        ClientListAdapter adapter = new ClientListAdapter(this, null);
+        adapter = new ClientListAdapter(this, ClientDataList.getStoredData());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         clientListRecyclerView.setLayoutManager(linearLayoutManager);
         clientListRecyclerView.setAdapter(adapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        if (intent.getExtras() != null) {
+            if (intent.getExtras().get(IS_REFRESH).equals("yes"))
+                adapter.notifyDataSetChanged();
+        }
+    }
 }

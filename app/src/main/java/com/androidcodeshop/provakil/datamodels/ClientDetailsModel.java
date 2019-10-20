@@ -1,4 +1,6 @@
-package com.androidcodeshop.provakil;
+package com.androidcodeshop.provakil.datamodels;
+
+import com.androidcodeshop.provakil.datamodels.AddressType;
 
 public class ClientDetailsModel {
 
@@ -118,5 +120,9 @@ public class ClientDetailsModel {
 
     public void setmExtraDetails(String mExtraDetails) {
         this.mExtraDetails = mExtraDetails;
+    }
+
+    public String getName(){
+        return getmFirstName() + " " + getmLastName();
     }
 }

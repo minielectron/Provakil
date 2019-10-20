@@ -1,4 +1,4 @@
-package com.androidcodeshop.provakil;
+package com.androidcodeshop.provakil.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -13,6 +13,9 @@ import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.androidcodeshop.provakil.R;
+import com.androidcodeshop.provakil.activities.ClientListActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;

@@ -10,7 +10,7 @@
         android:focusableInTouchMode="true"
         android:orientation="vertical"
         android:padding="@dimen/container_padding"
-        tools:context=".ClientFormActivity">
+        tools:context=".activities.ClientFormActivity">
 
         <TextView
             android:id="@+id/heading_tv"
@@ -186,7 +186,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
-                android:maxLength="35"
+                android:maxLength="6"
                 android:textSize="@dimen/text_input_size" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -209,6 +209,7 @@
 
             <RadioButton
                 android:id="@+id/home_rb"
+                android:checked="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -241,6 +242,7 @@
             <Spinner
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="120dp"
+                android:id="@+id/contact_type_spinner"
                 android:layout_height="wrap_content"
                 android:dropDownWidth="wrap_content"
                 android:entries="@array/city_list"

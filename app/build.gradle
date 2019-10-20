@@ -37,4 +37,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
+    // My own mini utility library
+
+    implementation 'com.github.minielectron:utils:2.0.1'
+
 }

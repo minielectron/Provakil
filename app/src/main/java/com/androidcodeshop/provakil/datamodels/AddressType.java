@@ -1,10 +1,10 @@
-package com.androidcodeshop.provakil;
+package com.androidcodeshop.provakil.datamodels;
 
 public class AddressType {
     private int id;
-    private int value;
+    private String value;
 
-    public AddressType(int id, int value) {
+    public AddressType(int id, String value) {
         this.id = id;
         this.value = value;
     }
@@ -13,7 +13,7 @@ public class AddressType {
         return id;
     }
 
-    public int getValue() {
+    public String getValue() {
         return value;
     }
 }

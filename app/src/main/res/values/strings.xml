@@ -27,4 +27,8 @@
         <item>Mediation Failed</item>
     </string-array>
     <string name="title_activity_client_list">ClientListActivity</string>
+    <string name="_8942">⋮</string>
+    <string name="demo_mobile_no">9971460042</string>
+    <string name="demo_code">1232DFG</string>
+    <string name="demo_name">Provakil Sharma</string>
 </resources>

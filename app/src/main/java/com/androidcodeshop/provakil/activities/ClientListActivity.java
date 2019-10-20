@@ -2,10 +2,14 @@ package com.androidcodeshop.provakil.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +23,7 @@ import butterknife.ButterKnife;
 
 import static com.androidcodeshop.provakil.activities.ClientFormActivity.IS_REFRESH;
 
-public class ClientListActivity extends AppCompatActivity {
+public class ClientListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -62,5 +66,27 @@ public class ClientListActivity extends AppCompatActivity {
             if (intent.getExtras().get(IS_REFRESH).equals("yes"))
                 adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        MenuItem searchViewItem = menu.findItem(R.id.app_bar_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchViewItem);
+        searchView.setQueryHint("Search Question");
+        searchView.setIconified(true);
+        searchView.setOnQueryTextListener(this);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adapter.filter(newText);
+        return true;
     }
 }

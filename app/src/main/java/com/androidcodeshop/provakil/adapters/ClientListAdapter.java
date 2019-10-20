@@ -31,11 +31,14 @@ import static com.androidcodeshop.provakil.activities.ClientFormActivity.VIEW_MO
 public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.ViewHolder> {
     private Context mContext;
     private ArrayList<ClientDetailsModel> clientDetailsList;
+    private ArrayList<ClientDetailsModel> clientDetailsCopy = new ArrayList<>();
+
     private Intent intent = null;
 
     public ClientListAdapter(Context mContext, ArrayList<ClientDetailsModel> clientDetailsList) {
         this.mContext = mContext;
         this.clientDetailsList = clientDetailsList;
+        clientDetailsCopy.addAll(clientDetailsList);
     }
 
     @NonNull
@@ -47,9 +50,9 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.nameTv.setText(clientDetailsList.get(position).getName());
-        holder.clientCodeTv.setText(String.format(Locale.ENGLISH, "Client Code : %s", clientDetailsList.get(position).getmClientCode()));
-        holder.phoneNumberTv.setText(String.format(Locale.ENGLISH, "Mobile No : %s", clientDetailsList.get(position).getmContactNumber()));
+        holder.nameTv.setText(clientDetailsCopy.get(position).getName());
+        holder.clientCodeTv.setText(String.format(Locale.ENGLISH, "Client Code : %s", clientDetailsCopy.get(position).getmClientCode()));
+        holder.phoneNumberTv.setText(String.format(Locale.ENGLISH, "Mobile No : %s", clientDetailsCopy.get(position).getmContactNumber()));
 
         holder.menuTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +97,21 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return clientDetailsList.size();
+        return clientDetailsCopy.size();
+    }
+
+    public void filter(String queryText) {
+        clientDetailsCopy.clear();
+        if (queryText.isEmpty()) {
+            clientDetailsCopy.addAll(clientDetailsList);
+        } else {
+            for (ClientDetailsModel clientDetailsModel : clientDetailsList) {
+                if (clientDetailsModel.getName().toLowerCase().contains(queryText.toLowerCase()) || clientDetailsModel.getmContactNumber().toLowerCase().contains(queryText.toLowerCase())) {
+                    clientDetailsCopy.add(clientDetailsModel);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

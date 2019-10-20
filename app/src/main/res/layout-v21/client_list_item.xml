@@ -56,10 +56,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
+            android:paddingStart="24dp"
+            android:paddingBottom="24dp"
             android:text="@string/_8942"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"/>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

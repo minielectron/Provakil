@@ -17,6 +17,31 @@ public class ClientDetailsModel {
     private String mContactNumber;
     private String mOperationalState;
     private String mExtraDetails;
+    private int statePosition, operationalStatePosition, contactInfoPos;
+
+    public int getStatePosition() {
+        return statePosition;
+    }
+
+    public void setStatePosition(int statePosition) {
+        this.statePosition = statePosition;
+    }
+
+    public int getOperationalStatePosition() {
+        return operationalStatePosition;
+    }
+
+    public void setOperationalStatePosition(int operationalStatePosition) {
+        this.operationalStatePosition = operationalStatePosition;
+    }
+
+    public int getContactInfoPos() {
+        return contactInfoPos;
+    }
+
+    public void setContactInfoPos(int contactInfoPos) {
+        this.contactInfoPos = contactInfoPos;
+    }
 
     public String getmFirstName() {
         return mFirstName;

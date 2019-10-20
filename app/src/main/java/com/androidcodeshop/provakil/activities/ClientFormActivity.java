@@ -9,10 +9,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +44,7 @@ import electrophile.mutils.MiniValidationUtils;
 public class ClientFormActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String IS_REFRESH = "is refresh";
+    public static final String VIEW_MODE = "View mode on";
     ArrayList<String> states;
     private static final String MANDATORY_SPANNABLE_ASTRISK = "*";
     @BindView(R.id.heading_tv)
@@ -101,8 +105,16 @@ public class ClientFormActivity extends AppCompatActivity implements View.OnClic
     Button submitBtn;
     @BindView(R.id.contact_type_spinner)
     Spinner contactTypeSpinner;
+    @BindView(R.id.masked)
+    FrameLayout masked;
+    @BindView(R.id.scroll_view)
+    ScrollView scrollView;
+    @BindView(R.id.slide_down)
+    ImageButton slideDown;
     private ClientDetailsModel mClientDetails;
     private String selectedAddreesType;
+    private boolean goDown = true;
+    private ArrayList<String> operationalStates, operationalStatesCodes, statesCodes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,8 +122,70 @@ public class ClientFormActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_client_form);
         ButterKnife.bind(this);
         setStateSpinners();
+        setViewMode();
         realtimeValidationOnEditText();
         submitBtn.setOnClickListener(this);
+        masked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ClientFormActivity.this, "View Mode is ON", Toast.LENGTH_SHORT).show();
+            }
+        });
+        slideDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (goDown) {
+                    scrollView.fullScroll(View.FOCUS_DOWN);
+                    slideDown.setRotationX(180);
+                    goDown = false;
+                } else {
+                    scrollView.fullScroll(View.FOCUS_UP);
+                    slideDown.setRotationX(180);
+                    goDown = true;
+                }
+            }
+        });
+    }
+
+    private void setViewMode() {
+        if (getIntent().getExtras() != null) {
+            if (getIntent().getExtras().get(VIEW_MODE).equals("true")) {
+                masked.setVisibility(View.VISIBLE);
+            } else masked.setVisibility(View.GONE);
+            int pos = getIntent().getExtras().getInt("pos");
+
+            ClientDetailsModel clientDetails = ClientDataList.getStoredData().get(pos);
+            firstNameEt.setText(clientDetails.getmFirstName());
+            lastNameEt.setText(clientDetails.getmLastName());
+            clientCodeEt.setText(clientDetails.getmClientCode());
+            addressLineOneEt.setText(clientDetails.getmAddressLineOne());
+            addressLineTwoEt.setText(clientDetails.getmAddressLineTwo());
+            cityEt.setText(clientDetails.getmCity());
+            pinEt.setText(clientDetails.getmPin());
+            contactNumberEt.setText(clientDetails.getmContactNumber());
+            extraDetailsEt.setText(clientDetails.getmExtraDetails());
+
+            int statePos = clientDetails.getStatePosition();
+            if (statePos != 0) statesSpinner.setSelection(statePos);
+            else statesSpinner.setSelection(0);
+
+            int opstatePos = clientDetails.getOperationalStatePosition();
+            if (statePos != 0) operationalStateSpinner.setSelection(opstatePos);
+            else operationalStateSpinner.setSelection(0);
+
+            int contactInfoPos = clientDetails.getContactInfoPos();
+            if (statePos != 0) contactTypeSpinner.setSelection(contactInfoPos);
+            else contactTypeSpinner.setSelection(0);
+
+
+            if (clientDetails.getmAddressType().getValue().equals("Home")) {
+                homeRb.setChecked(true);
+            } else officeRb.setChecked(true);
+
+
+
+        }
+
     }
 
     private void realtimeValidationOnEditText() {
@@ -169,7 +243,7 @@ public class ClientFormActivity extends AppCompatActivity implements View.OnClic
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(addressLineOneEt.getText().length() > 0)
+                if (addressLineOneEt.getText().length() > 0)
                     addressLineOneTil.setError(null);
             }
         });
@@ -182,10 +256,10 @@ public class ClientFormActivity extends AppCompatActivity implements View.OnClic
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!MiniValidationUtils.isValidPincode(pinEt.getText().toString())){
+                if (!MiniValidationUtils.isValidPincode(pinEt.getText().toString())) {
                     pinEt.setError("Provide valid pin");
                     pinEt.requestFocus();
-                }else pinEt.setError(null);
+                } else pinEt.setError(null);
             }
 
             @Override
@@ -202,7 +276,9 @@ public class ClientFormActivity extends AppCompatActivity implements View.OnClic
      */
     private void setStateSpinners() {
         states = new ArrayList<>();
-        ArrayList<String> operationalStates = new ArrayList<>();
+        statesCodes = new ArrayList<>();
+        operationalStates = new ArrayList<>();
+        operationalStatesCodes = new ArrayList<>();
         String stateJson = loadJSONFromAsset();
         try {
             if (stateJson != null) {
@@ -211,6 +287,7 @@ public class ClientFormActivity extends AppCompatActivity implements View.OnClic
                     JSONObject state = array.getJSONObject(i);
                     states.add(state.getString("name"));
                     operationalStates.add(state.getString("name"));
+                    statesCodes.add(state.getString("id"));
                 }
                 states.add(0, "Select State");
             }
@@ -346,6 +423,9 @@ public class ClientFormActivity extends AppCompatActivity implements View.OnClic
             mClientDetails.setmContactNumber(contactNumber);
             mClientDetails.setmOperationalState(operationalState);
             mClientDetails.setmExtraDetails(extraDetails);
+            mClientDetails.setStatePosition(statesSpinner.getSelectedItemPosition());
+            mClientDetails.setOperationalStatePosition(operationalStateSpinner.getSelectedItemPosition());
+            mClientDetails.setContactInfoPos(contactTypeSpinner.getSelectedItemPosition());
 
             ClientDataList.getStoredData().add(0, mClientDetails);
             Intent intent = new Intent(this, ClientListActivity.class);

@@ -52,10 +52,13 @@
             android:id="@+id/optionsMenuTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:textSize="15sp"
-            android:text="&#8942;"/>
+            android:layout_alignParentEnd="true"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:text="@string/_8942"
+            android:textSize="15sp" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

@@ -74,7 +74,7 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Vi
                                 return true;
                             case R.id.action_delete:
                                 Toast.makeText(mContext, "Deleted Successfully", Toast.LENGTH_SHORT).show();
-                                ClientDataList.getStoredData().remove(position);
+                                ClientDataList.getStoredData().remove(clientDetailsCopy.get(position).getItemPosition());
                                 notifyDataSetChanged();
                                 return true;
                             default:

@@ -426,7 +426,7 @@ public class ClientFormActivity extends AppCompatActivity implements View.OnClic
             mClientDetails.setStatePosition(statesSpinner.getSelectedItemPosition());
             mClientDetails.setOperationalStatePosition(operationalStateSpinner.getSelectedItemPosition());
             mClientDetails.setContactInfoPos(contactTypeSpinner.getSelectedItemPosition());
-
+            mClientDetails.setItemPosition(ClientDataList.getStoredData().size());
             if (getIntent().getExtras() == null) {
                 ClientDataList.getStoredData().add(mClientDetails);
                 Intent intent = new Intent(this, ClientListActivity.class);

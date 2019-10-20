@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidcodeshop.provakil.R;
@@ -63,20 +64,12 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Vi
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.action_view:
-                                Toast.makeText(mContext, "View Clicked", Toast.LENGTH_SHORT).show();
-                                intent = new Intent(mContext, ClientFormActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                intent.putExtra(VIEW_MODE, "true");
-                                intent.putExtra(EDIT_MODE, "false");
-                                intent.putExtra("pos", position);
-                                mContext.startActivity(intent);
-                                return true;
                             case R.id.action_edit:
                                 Toast.makeText(mContext, "Edit Clicked", Toast.LENGTH_SHORT).show();
                                 intent = new Intent(mContext, ClientFormActivity.class);
                                 intent.putExtra(EDIT_MODE, "true");
                                 intent.putExtra(VIEW_MODE, "false");
+                                intent.putExtra("pos", clientDetailsCopy.get(position).getItemPosition());
                                 mContext.startActivity(intent);
                                 return true;
                             case R.id.action_delete:
@@ -93,6 +86,18 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Vi
                 popup.show();
             }
         });
+        holder.parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(mContext, ClientFormActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra(VIEW_MODE, "true");
+                intent.putExtra(EDIT_MODE, "false");
+                intent.putExtra("pos", clientDetailsCopy.get(position).getItemPosition());
+                mContext.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -106,7 +111,9 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Vi
             clientDetailsCopy.addAll(clientDetailsList);
         } else {
             for (ClientDetailsModel clientDetailsModel : clientDetailsList) {
-                if (clientDetailsModel.getName().toLowerCase().contains(queryText.toLowerCase()) || clientDetailsModel.getmContactNumber().toLowerCase().contains(queryText.toLowerCase())) {
+                if (clientDetailsModel.getName().toLowerCase().contains(queryText.toLowerCase()) ||
+                        clientDetailsModel.getmContactNumber().toLowerCase().contains(queryText.toLowerCase()) ||
+                        clientDetailsModel.getmClientCode().toLowerCase().contains(queryText.toLowerCase())) {
                     clientDetailsCopy.add(clientDetailsModel);
                 }
             }
@@ -123,6 +130,9 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Vi
         TextView phoneNumberTv;
         @BindView(R.id.optionsMenuTv)
         TextView menuTv;
+
+        @BindView(R.id.parent)
+        CardView parent;
 
         ViewHolder(View view) {
             super(view);

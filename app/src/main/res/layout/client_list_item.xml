@@ -8,6 +8,7 @@
     android:foreground="@drawable/custom_ripple"
     android:layout_marginBottom="5dp"
     android:clickable="true"
+    android:id="@+id/parent"
     android:focusable="true">
 
     <RelativeLayout

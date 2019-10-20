@@ -11,6 +11,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_marginTop="5dp"
+        app:reverseLayout="true"
+        app:stackFromEnd="true"
         tools:listitem="@layout/client_list_item"
         android:id="@+id/client_list_recycler_view"
         android:layout_height="match_parent"/>

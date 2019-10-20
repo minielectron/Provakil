@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,8 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.core.view.MenuItemCompat;
 
 import com.androidcodeshop.provakil.R;
 import com.androidcodeshop.provakil.data.ClientDataList;
@@ -174,18 +170,19 @@ public class ClientFormActivity extends AppCompatActivity implements View.OnClic
             else statesSpinner.setSelection(0);
 
             int opstatePos = clientDetails.getOperationalStatePosition();
-            if (statePos != 0) operationalStateSpinner.setSelection(opstatePos);
+            if (opstatePos != 0) operationalStateSpinner.setSelection(opstatePos);
             else operationalStateSpinner.setSelection(0);
 
             int contactInfoPos = clientDetails.getContactInfoPos();
-            if (statePos != 0) contactTypeSpinner.setSelection(contactInfoPos);
+            if (contactInfoPos != 0) contactTypeSpinner.setSelection(contactInfoPos);
             else contactTypeSpinner.setSelection(0);
 
 
-            if (clientDetails.getmAddressType().getValue().equals("Home")) {
-                homeRb.setChecked(true);
-            } else officeRb.setChecked(true);
-
+            if (clientDetails.getmAddressType()!= null) {
+                if (clientDetails.getmAddressType().getValue().equals("Home")) {
+                    homeRb.setChecked(true);
+                } else officeRb.setChecked(true);
+            }
 
         }
 
@@ -431,7 +428,7 @@ public class ClientFormActivity extends AppCompatActivity implements View.OnClic
             mClientDetails.setContactInfoPos(contactTypeSpinner.getSelectedItemPosition());
 
             if (getIntent().getExtras() == null) {
-                ClientDataList.getStoredData().add(0, mClientDetails);
+                ClientDataList.getStoredData().add(mClientDetails);
                 Intent intent = new Intent(this, ClientListActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra(IS_REFRESH, "yes");

@@ -22,6 +22,7 @@ public class ClientDataList {
                 clientDetailsModel.setmLastName("Prashad "+i);
                 clientDetailsModel.setmContactNumber("998877664"+i);
                 clientDetailsModel.setmClientCode("29HGJKL30"+i);
+                clientDetailsModel.setItemPosition(i);
                 storedData.add(clientDetailsModel);
             }
             return storedData;

@@ -37,7 +37,6 @@ public class ClientListActivity extends AppCompatActivity implements SearchView.
         setContentView(R.layout.activity_client_list);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-
         setRecyclerView();
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -73,7 +72,7 @@ public class ClientListActivity extends AppCompatActivity implements SearchView.
         getMenuInflater().inflate(R.menu.search_menu, menu);
         MenuItem searchViewItem = menu.findItem(R.id.app_bar_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchViewItem);
-        searchView.setQueryHint("Search Question");
+        searchView.setQueryHint("Search Client");
         searchView.setIconified(true);
         searchView.setOnQueryTextListener(this);
         return true;

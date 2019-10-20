@@ -1,7 +1,5 @@
 package com.androidcodeshop.provakil.datamodels;
 
-import com.androidcodeshop.provakil.datamodels.AddressType;
-
 public class ClientDetailsModel {
 
     private String mFirstName;
@@ -18,6 +16,15 @@ public class ClientDetailsModel {
     private String mOperationalState;
     private String mExtraDetails;
     private int statePosition, operationalStatePosition, contactInfoPos;
+    private int itemPosition;
+
+    public int getItemPosition() {
+        return itemPosition;
+    }
+
+    public void setItemPosition(int itemPosition) {
+        this.itemPosition = itemPosition;
+    }
 
     public int getStatePosition() {
         return statePosition;
@@ -147,7 +154,7 @@ public class ClientDetailsModel {
         this.mExtraDetails = mExtraDetails;
     }
 
-    public String getName(){
+    public String getName() {
         return getmFirstName() + " " + getmLastName();
     }
 }

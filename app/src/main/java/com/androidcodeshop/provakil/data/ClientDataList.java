@@ -15,16 +15,6 @@ public class ClientDataList {
     public static ArrayList<ClientDetailsModel> getStoredData() {
         if (storedData == null) {
             storedData = new ArrayList<>();
-            ClientDetailsModel clientDetailsModel ;
-            for(int i = 0 ; i < 5 ; i++) {
-                clientDetailsModel = new ClientDetailsModel();
-                clientDetailsModel.setmFirstName("Demo");
-                clientDetailsModel.setmLastName("Prashad "+i);
-                clientDetailsModel.setmContactNumber("998877664"+i);
-                clientDetailsModel.setmClientCode("29HGJKL30"+i);
-                clientDetailsModel.setItemPosition(i);
-                storedData.add(clientDetailsModel);
-            }
             return storedData;
         }
         return storedData;

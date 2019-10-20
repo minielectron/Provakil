@@ -1,10 +1,12 @@
 package com.androidcodeshop.provakil;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,10 +33,10 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class ClientFormActivity extends AppCompatActivity implements View.OnClickListener {
 
     ArrayList<String> states;
-    private static final String compulsatory_spannable_astrik = "*";
+    private static final String MANDATORY_SPANNABLE_ASTRISK = "*";
     @BindView(R.id.heading_tv)
     TextView headingTv;
     @BindView(R.id.client_details_group)
@@ -91,18 +93,20 @@ public class MainActivity extends AppCompatActivity {
     EditText extraDetailsEt;
     @BindView(R.id.submit_btn)
     Button submitBtn;
-    private ArrayList<String> operationalStates;
+    private ClientDetailsModel mlientDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_client_form);
         ButterKnife.bind(this);
-        states = new ArrayList<>();
-        operationalStates = new ArrayList<>();
-        Spannable colorLetter = new SpannableString(compulsatory_spannable_astrik);
-        colorLetter.setSpan(new ForegroundColorSpan(Color.RED), 0, colorLetter.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        setStateSpinners();
+        submitBtn.setOnClickListener(this);
+    }
 
+    private void setStateSpinners() {
+        states = new ArrayList<>();
+        ArrayList<String> operationalStates = new ArrayList<>();
         String stateJson = loadJSONFromAsset();
         try {
             if (stateJson != null) {
@@ -117,19 +121,19 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, R.layout.spinner_background_layout, states);
         ArrayAdapter<String> spinnerOpAdapter = new ArrayAdapter<>(this, R.layout.spinner_background_layout, operationalStates);
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_popover_layout);
         spinnerOpAdapter.setDropDownViewResource(R.layout.spinner_popover_layout);
         statesSpinner.setAdapter(spinnerAdapter);
-        operationalStates.add(0, "Operational States");
+        operationalStates.add(0, "Select Operational State");
         operationalStateSpinner.setAdapter(spinnerOpAdapter);
-
     }
 
 
     public String loadJSONFromAsset() {
-        String json = null;
+        String json;
         try {
             InputStream is = getAssets().open("states.json");
             int size = is.available();
@@ -142,5 +146,12 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
         return json;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, ClientListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

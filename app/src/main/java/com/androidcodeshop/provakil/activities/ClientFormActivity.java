@@ -45,6 +45,7 @@ public class ClientFormActivity extends AppCompatActivity implements View.OnClic
 
     public static final String IS_REFRESH = "is refresh";
     public static final String VIEW_MODE = "View mode on";
+    public static final String EDIT_MODE = "Edit mode on";
     ArrayList<String> states;
     private static final String MANDATORY_SPANNABLE_ASTRISK = "*";
     @BindView(R.id.heading_tv)
@@ -112,7 +113,7 @@ public class ClientFormActivity extends AppCompatActivity implements View.OnClic
     @BindView(R.id.slide_down)
     ImageButton slideDown;
     private ClientDetailsModel mClientDetails;
-    private String selectedAddreesType;
+    private String selectedAddreesType = "Home"; // default value
     private boolean goDown = true;
     private ArrayList<String> operationalStates, operationalStatesCodes, statesCodes;
 
@@ -140,7 +141,6 @@ public class ClientFormActivity extends AppCompatActivity implements View.OnClic
                     goDown = false;
                 } else {
                     scrollView.fullScroll(View.FOCUS_UP);
-                    slideDown.setRotationX(180);
                     goDown = true;
                 }
             }
@@ -181,7 +181,6 @@ public class ClientFormActivity extends AppCompatActivity implements View.OnClic
             if (clientDetails.getmAddressType().getValue().equals("Home")) {
                 homeRb.setChecked(true);
             } else officeRb.setChecked(true);
-
 
 
         }
@@ -427,12 +426,23 @@ public class ClientFormActivity extends AppCompatActivity implements View.OnClic
             mClientDetails.setOperationalStatePosition(operationalStateSpinner.getSelectedItemPosition());
             mClientDetails.setContactInfoPos(contactTypeSpinner.getSelectedItemPosition());
 
-            ClientDataList.getStoredData().add(0, mClientDetails);
-            Intent intent = new Intent(this, ClientListActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra(IS_REFRESH, "yes");
-            startActivity(intent);
-
+            if (getIntent().getExtras() == null) {
+                ClientDataList.getStoredData().add(0, mClientDetails);
+                Intent intent = new Intent(this, ClientListActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra(IS_REFRESH, "yes");
+                startActivity(intent);
+            } else if (getIntent().getExtras().get(VIEW_MODE).equals("true")) {
+                masked.setVisibility(View.VISIBLE);
+            } else if (getIntent().getExtras().get(EDIT_MODE).equals("true")) {
+                masked.setVisibility(View.GONE);
+                int pos = getIntent().getExtras().getInt("pos");
+                ClientDataList.getStoredData().set(pos, mClientDetails);
+                Intent intent = new Intent(this, ClientListActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra(IS_REFRESH, "yes");
+                startActivity(intent);
+            }
         }
 
     }

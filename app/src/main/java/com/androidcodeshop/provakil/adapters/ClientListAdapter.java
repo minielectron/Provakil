@@ -24,6 +24,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.androidcodeshop.provakil.activities.ClientFormActivity.EDIT_MODE;
 import static com.androidcodeshop.provakil.activities.ClientFormActivity.VIEW_MODE;
 
 
@@ -64,12 +65,14 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Vi
                                 intent = new Intent(mContext, ClientFormActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra(VIEW_MODE, "true");
-                                intent.putExtra("pos",position);
+                                intent.putExtra(EDIT_MODE, "false");
+                                intent.putExtra("pos", position);
                                 mContext.startActivity(intent);
                                 return true;
                             case R.id.action_edit:
                                 Toast.makeText(mContext, "Edit Clicked", Toast.LENGTH_SHORT).show();
                                 intent = new Intent(mContext, ClientFormActivity.class);
+                                intent.putExtra(EDIT_MODE, "true");
                                 intent.putExtra(VIEW_MODE, "false");
                                 mContext.startActivity(intent);
                                 return true;

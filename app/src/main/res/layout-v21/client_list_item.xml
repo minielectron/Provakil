@@ -8,6 +8,7 @@
     android:layout_marginBottom="5dp"
     android:clickable="true"
     android:elevation="6dp"
+    android:foreground="@drawable/custom_ripple"
     android:focusable="true">
 
     <RelativeLayout
@@ -21,6 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lines="1"
+            android:textColor="@android:color/black"
+            android:fontFamily="@font/roboto_regular_400"
             android:text="Prakash Sharma"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -33,36 +36,19 @@
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
             android:text="1232DFG"
+            android:textColor="@android:color/black"
+            android:fontFamily="@font/roboto_regular_400"
             android:textAllCaps="true"
             android:textSize="13sp" />
 
         <TextView
+            android:textColor="@android:color/black"
             android:id="@+id/phone_number_tv"
             android:layout_width="wrap_content"
+            android:fontFamily="@font/roboto_regular_400"
             android:layout_height="wrap_content"
             android:layout_below="@id/client_code_tv"
             android:text="9971468242" />
-
-        <ImageButton
-            android:id="@+id/edit_ib"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:background="@android:color/transparent"
-            android:padding="10dp"
-            android:src="@drawable/ic_edit_black_24dp" />
-
-
-        <ImageButton
-            android:id="@+id/delete_ib"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/client_code_tv"
-            android:layout_alignParentEnd="true"
-            android:background="@android:color/transparent"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:src="@drawable/ic_delete_black_24dp" />
 
 
     </RelativeLayout>

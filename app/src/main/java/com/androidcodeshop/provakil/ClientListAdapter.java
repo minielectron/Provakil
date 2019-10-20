@@ -50,10 +50,6 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Vi
         TextView clientCodeTv;
         @BindView(R.id.phone_number_tv)
         TextView phoneNumberTv;
-        @BindView(R.id.edit_ib)
-        ImageButton editIb;
-        @BindView(R.id.delete_ib)
-        ImageButton deleteIb;
 
         ViewHolder(View view) {
             super(view);
